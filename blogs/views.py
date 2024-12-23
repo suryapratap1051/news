@@ -1,4 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect
+from .forms import  SingUpForm
+
 
 
 #home
@@ -23,8 +25,9 @@ def user_logout(request):
     
 
 #singup
-def singup(request):
-    return render(request, 'blogs/singup.html')
+def user_singup(request):
+    form=SingUpForm
+    return render(request, 'blogs/singup.html',{'form':form})
 
 #login
 def user_login(request):

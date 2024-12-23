@@ -25,7 +25,7 @@ urlpatterns = [
     path('about/',views.about,name='about'),
     path('contect/',views.contect,name='contect'),
     path('deshboard/',views.deshboard,name='deshboard'),
-    path('singup/',views.singup,name='singup'),
+    path('singup/',views.user_singup,name='singup'),
     path('login/',views.user_login,name='login'),
     path('logout/',views.user_logout,name='logout'),
 ]
