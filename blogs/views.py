@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .forms import  SingUpForm
+from .forms import  SingUpForm ,LoginForm
 
 
 
@@ -31,4 +31,5 @@ def user_singup(request):
 
 #login
 def user_login(request):
-    return render(request, 'blogs/login.html')
+    form=LoginForm()
+    return render(request, 'blogs/login.html', {'form': form})
