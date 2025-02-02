@@ -1,5 +1,7 @@
 from django.shortcuts import render,HttpResponseRedirect
 from .forms import  SingUpForm ,LoginForm
+from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
 
 
 
@@ -25,11 +27,32 @@ def user_logout(request):
     
 
 #singup
-def user_singup(request):
-    form=SingUpForm
+def user_singup(request):    
+    if request.method =="POST":           
+       form=SingUpForm(request.POST)
+       if form.is_valid():
+           messages.success(request,'congratulations! you have become on Author')           
+           form.save()
+    else:               
+        form=SingUpForm
     return render(request, 'blogs/singup.html',{'form':form})
 
 #login
 def user_login(request):
-    form=LoginForm()
+    
+   if not request.user.is_authenticated:
+    if request.method =="POST":
+        form = LoginForm(request=request,data=request.POST)
+        if form.is_valid():
+            uname= form.cleaned_data['username']
+            upass= form.cleaned_data['password']
+            user = authenticate(username=uname,password=upass)
+            if user is not None:
+                login(request,user)
+                messages.success(request,'Login successfully')
+                return HttpResponseRedirect('/deshboard/')
+    else:
+        form=LoginForm()
     return render(request, 'blogs/login.html', {'form': form})
+   else:
+    return HttpResponseRedirect('/deshboard')
